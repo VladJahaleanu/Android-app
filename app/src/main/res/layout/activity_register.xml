@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:id="@+id/password"
+        android:id="@+id/passwordReg"
         android:hint="Password"
         android:maxLines="1"
         android:layout_marginStart="20dp"
@@ -57,14 +57,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Already have an account? - "
+            android:text="Already have an account? - " />
 
-        <TextView
-            android:id="@+id/loginFromRegBtn"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/loginFromRegButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Log in"
-            android:textStyle="bold" />
+            android:layout_weight="1"
+            android:text="Log in" />
+
+
     </LinearLayout>
 
 </LinearLayout>

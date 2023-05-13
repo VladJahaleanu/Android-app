@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -16,7 +17,7 @@ class Login : AppCompatActivity() {
         val email: EditText = findViewById(R.id.email)
         val password: EditText = findViewById(R.id.password)
         val loginBtn: Button = findViewById(R.id.loginBtn)
-        val registerBtn: TextView = findViewById(R.id.registerBtn)
+        val registerBtn: Button = findViewById(R.id.registerFromLoginBtn)
 
         loginBtn.setOnClickListener {
             @Override
@@ -31,6 +32,11 @@ class Login : AppCompatActivity() {
 
                 }
             }
+        }
+
+        registerBtn.setOnClickListener {
+            val intent = Intent(this, Register::class.java)
+            startActivity(intent)
         }
     }
 }
