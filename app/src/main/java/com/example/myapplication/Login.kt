@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -69,6 +70,8 @@ class Login : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+
 
     private fun signInGoogle() {
         val signInIntent = googleSignInClient.signInIntent
