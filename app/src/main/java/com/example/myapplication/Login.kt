@@ -1,11 +1,15 @@
 package com.example.myapplication
 
+import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnticipateInterpolator
+import android.view.animation.AnticipateOvershootInterpolator
+import android.view.animation.LinearInterpolator
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -41,24 +45,36 @@ class Login : AppCompatActivity() {
         val googleLoginBtn: Button = findViewById(R.id.googleLoginBtn)
 
         loginBtn.setOnClickListener {
-                val emailTxt: String = email.text.toString()
-                val passwordTxt: String = password.text.toString()
+            // Login
+            val emailTxt: String = email.text.toString()
+            val passwordTxt: String = password.text.toString()
 
-                if(emailTxt.isEmpty() || passwordTxt.isEmpty()){
-                    Toast.makeText(applicationContext, "Complete all fields", Toast.LENGTH_SHORT).show()
-                }
-                else {
-                    firebaseAuth.signInWithEmailAndPassword(emailTxt, passwordTxt).addOnCompleteListener{
-                        if (it.isSuccessful) {
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
-                        }
-                        else {
-                            Toast.makeText(applicationContext, it.exception.toString(), Toast.LENGTH_SHORT).show()
-                        }
+            if(emailTxt.isEmpty() || passwordTxt.isEmpty()){
+                Toast.makeText(applicationContext, "Complete all fields", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                firebaseAuth.signInWithEmailAndPassword(emailTxt, passwordTxt).addOnCompleteListener{
+                    if (it.isSuccessful) {
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
                     }
-
+                    else {
+                        Toast.makeText(applicationContext, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                    }
                 }
+
+            }
+
+            // Animation
+            val tY = ObjectAnimator.ofFloat(loginBtn,
+                View.ROTATION,
+                loginBtn.rotation,
+                loginBtn.rotation + 360F)
+
+            tY.duration = 1200
+            tY.interpolator = AnticipateOvershootInterpolator(1.5F)
+            tY.start()
+
         }
 
         googleLoginBtn.setOnClickListener {
