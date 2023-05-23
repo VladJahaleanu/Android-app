@@ -11,7 +11,7 @@ class Motion : AppCompatActivity() {
         setContentView(R.layout.activity_motion)
 
         Handler().postDelayed(Runnable {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, Login::class.java))
             finish()
         }, 3000)
     }
