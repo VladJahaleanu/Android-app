@@ -1,11 +1,13 @@
 package com.example.myapplication
 
 import android.content.ActivityNotFoundException
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -14,7 +16,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
@@ -79,6 +83,18 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Error: " + e.localizedMessage, Toast.LENGTH_SHORT).show()
             }
         }
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            Log.d(TAG, "token is " + token)
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
