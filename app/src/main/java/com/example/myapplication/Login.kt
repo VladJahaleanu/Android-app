@@ -56,6 +56,7 @@ class Login : AppCompatActivity() {
                 firebaseAuth.signInWithEmailAndPassword(emailTxt, passwordTxt).addOnCompleteListener{
                     if (it.isSuccessful) {
                         val intent = Intent(this, MainActivity::class.java)
+                        intent.putExtra("user", email.text.toString());
                         startActivity(intent)
                     }
                     else {
@@ -99,6 +100,9 @@ class Login : AppCompatActivity() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
                 handleResults(task)
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("user", "shishadvisor@gmail.com")
+                startActivity(intent)
             }
     }
 
