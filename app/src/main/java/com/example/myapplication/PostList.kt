@@ -20,10 +20,20 @@ import com.example.myapplication.databinding.ActivityPostListBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import java.io.File
 import java.io.FileOutputStream
+import java.util.jar.Attributes
 
+class CompStrings: Comparator<StorageReference>{
+    override fun compare(o1: StorageReference, o2: StorageReference): Int {
+        if(o1 == null || o2 == null)
+            return 0
+
+        return o1.toString().compareTo(o2.toString())
+    }
+}
 
 class PostList : AppCompatActivity() {
 
@@ -57,7 +67,9 @@ class PostList : AppCompatActivity() {
         val link = "gs://androidapp-1d5d7.appspot.com/$user/"
         val folderReference = storage.getReferenceFromUrl(link)
         folderReference.listAll().addOnSuccessListener { listResult ->
-            for (fileRef in listResult.items) {
+            val comparator = CompStrings()
+            val boss = listResult.items.sortedWith(comparator)
+            for (fileRef in boss) {
                 val tempLink = link + fileRef.name
                 val fileReference = storage.getReferenceFromUrl(tempLink)
                 fileReference.getBytes(ONE_MEGABYTE).addOnSuccessListener {

@@ -109,15 +109,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
-
+        // Post picture
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK){
             val imageBitMap = data?.extras?.get("data") as Bitmap
             post_button = findViewById(R.id.post_btn)
             post_button.setOnClickListener {
                 // Create a storage reference from our app
                 val storageRef = storage.reference
-                val randomName = java.util.UUID.randomUUID().toString()
-                val imagePath = storageRef.child("$user/$randomName.jpg")
+                val time = System.currentTimeMillis()
+                val imagePath = storageRef.child("$user/$time.jpg")
                 val baos = ByteArrayOutputStream()
                 imageBitMap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                 val data = baos.toByteArray()
