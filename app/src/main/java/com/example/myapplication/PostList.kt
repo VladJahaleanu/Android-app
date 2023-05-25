@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.example.myapplication.databinding.ActivityPostListBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
@@ -51,9 +52,6 @@ class PostList : AppCompatActivity() {
             user = extras.getString("user").toString()
         }
 
-        // Create a reference with an initial file path and name
-//        val pathReference = storageRef.child("${user.toString()}/download.jpg")
-
         // Download a photo
         val ONE_MEGABYTE: Long = 1024 * 1024
         val link = "gs://androidapp-1d5d7.appspot.com/$user/"
@@ -72,13 +70,22 @@ class PostList : AppCompatActivity() {
             Toast.makeText(this,  it.toString(), Toast.LENGTH_LONG).show()
         }
 
-
         // Navigation
-        binding.bottomNavigationView.setOnItemSelectedListener {
+        val btmNav: BottomNavigationView = findViewById(R.id.bottomNavigationView)
+        btmNav.menu.getItem(1).isChecked = true
+        btmNav.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.home -> {
+                R.id.post -> {
                     Handler().post(Runnable {
                         val intent = Intent(this, MainActivity::class.java)
+                        intent.putExtra("user", user)
+                        startActivity(intent)
+                        finish()
+                    })
+                }
+                R.id.help -> {
+                    Handler().post(Runnable {
+                        val intent = Intent(this, Help::class.java)
                         intent.putExtra("user", user)
                         startActivity(intent)
                         finish()
@@ -109,6 +116,13 @@ class PostList : AppCompatActivity() {
         binding.scrollableLayout.addView(imageView)
 
         val dynamicButton = Button(this)
+        val paramsButton = LinearLayout.LayoutParams(
+            FILL_PARENT,
+            150
+        )
+        paramsButton.setMargins(120, -20, 120, 50)
+        dynamicButton.layoutParams = paramsButton
+
         dynamicButton.text = "Share"
         dynamicButton.id = postCount
         postCount += 1

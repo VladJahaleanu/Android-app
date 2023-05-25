@@ -2,11 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home"
-        android:icon="@drawable/baseline_home_24"
-        android:title="Home" />
+        android:id="@+id/post"
+        android:icon="@drawable/baseline_camera_24"
+        android:title="Post" />
     <item
-        android:id="@+id/settings"
-        android:icon="@drawable/baseline_settings_24"
-        android:title="Settings" />
+        android:id="@+id/timeline"
+        android:icon="@drawable/baseline_view_timeline_24"
+        android:title="Timeline" />
+    <item
+        android:id="@+id/help"
+        android:icon="@drawable/baseline_help_24"
+        android:title="Help" />
 </menu>

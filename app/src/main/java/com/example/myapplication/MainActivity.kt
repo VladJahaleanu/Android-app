@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
@@ -55,11 +56,21 @@ class MainActivity : AppCompatActivity() {
         txt.text = "Hello $user!"
 
         // Navigation
-        binding.bottomNavigationView.setOnItemSelectedListener {
+        val btmNav: BottomNavigationView = findViewById(R.id.bottomNavigationView)
+        btmNav.menu.getItem(0).isChecked = true
+        btmNav.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.settings -> {
+                R.id.timeline -> {
                     Handler().post(Runnable {
                         val intent = Intent(this, PostList::class.java)
+                        intent.putExtra("user", user)
+                        startActivity(intent)
+                        finish()
+                    })
+                }
+                R.id.help -> {
+                    Handler().post(Runnable {
+                        val intent = Intent(this, Help::class.java)
                         intent.putExtra("user", user)
                         startActivity(intent)
                         finish()
